@@ -1,0 +1,1130 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x890800109C5f42100111c42a89936a8DA1Cd1e9d",
+      "txHash": "0xd51b1980a53a7aa7dd8780d74570e5ae8beae3ff9b9739a69acd3b99d500541c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xef374Bf6d855c2E652012c6aF4C96d280E2e44f3",
+      "txHash": "0x26cc6becc3b27136ff5978cce25e9d28e5dfefc0e5ad4a0e53e7c3301a2515f0",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "2caacd03e962f7fcc722aa63af343dca7c501192b872c4602a23240d8137e74f": {
+      "address": "0xC80ea872FaB9eeD64a9Ea3AF4E78be3d692F775c",
+      "txHash": "0xe8b9808d51497b732aaf5682499fc927e50cd3acb4d86fb390de7507acdd14d3",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "txCount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:85"
+          },
+          {
+            "label": "reqCount",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:86"
+          },
+          {
+            "label": "_tokenAddresses",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:87"
+          },
+          {
+            "label": "_userAddresses",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:88"
+          },
+          {
+            "label": "DOMAIN_SEPARATOR",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_bytes32",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:90"
+          },
+          {
+            "label": "CLAIMBY_EMAIL_TYPEHASH",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_bytes32",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:91"
+          },
+          {
+            "label": "_users",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_struct(User)3302_storage)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:93"
+          },
+          {
+            "label": "_payIds",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:94"
+          },
+          {
+            "label": "_usernames",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:95"
+          },
+          {
+            "label": "_paymentCodes",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_bytes_memory_ptr,t_uint256)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:96"
+          },
+          {
+            "label": "_enlistedTokens",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:97"
+          },
+          {
+            "label": "_baseBalances",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:98"
+          },
+          {
+            "label": "_usersRequest",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:99"
+          },
+          {
+            "label": "_requests",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_uint256,t_struct(RequestPayment)3331_storage)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:100"
+          },
+          {
+            "label": "_transactions",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_uint256,t_struct(Transaction)1816_storage)",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:101"
+          },
+          {
+            "label": "_emailToReq",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_mapping(t_bytes_memory_ptr,t_mapping(t_uint256,t_address))",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:102"
+          },
+          {
+            "label": "_emailBalances",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_mapping(t_bytes_memory_ptr,t_mapping(t_address,t_uint256))",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:103"
+          },
+          {
+            "label": "_tokenBalances",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "DexaPay",
+            "src": "contracts/DexaPay.sol:104"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)25_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)35_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)25_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)95_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)273_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)25_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_memory_ptr": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_enum(RequestStatus)3282": {
+            "label": "enum RequestStatus",
+            "members": [
+              "Pending",
+              "Rejected",
+              "Fulfilled"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_enum(RequestType)3278": {
+            "label": "enum RequestType",
+            "members": [
+              "Wallet",
+              "Email"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_enum(TransactionType)1796": {
+            "label": "enum TransactionType",
+            "members": [
+              "Deposit",
+              "Withdraw",
+              "Transfer",
+              "FundBill",
+              "RemiteBill"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(User)3302_storage)": {
+            "label": "mapping(address => struct User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(bytes => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(bytes => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes_memory_ptr,t_uint256)": {
+            "label": "mapping(bytes => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(RequestPayment)3331_storage)": {
+            "label": "mapping(uint256 => struct RequestPayment)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Transaction)1816_storage)": {
+            "label": "mapping(uint256 => struct Transaction)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(RequestPayment)3331_storage": {
+            "label": "struct RequestPayment",
+            "members": [
+              {
+                "label": "sender",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "recipient",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "fee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "email",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "remark",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "expiresAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "requestType",
+                "type": "t_enum(RequestType)3278",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(RequestStatus)3282",
+                "offset": 1,
+                "slot": "9"
+              },
+              {
+                "label": "isRequesting",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "9"
+              },
+              {
+                "label": "paymentCode",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "10"
+              }
+            ],
+            "numberOfBytes": "352"
+          },
+          "t_struct(Transaction)1816_storage": {
+            "label": "struct Transaction",
+            "members": [
+              {
+                "label": "txId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "txType",
+                "type": "t_enum(TransactionType)1796",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "txFrom",
+                "type": "t_address_payable",
+                "offset": 1,
+                "slot": "1"
+              },
+              {
+                "label": "txTo",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "txAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "txFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "txDate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "tokenAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "remark",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(User)3302_storage": {
+            "label": "struct User",
+            "members": [
+              {
+                "label": "username",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "wallet",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "payId",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "email",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)25_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "866330db98121342b2c0957ff4b0e5c4c6b9f3f379c15ccc51643481b56587bd": {
+      "address": "0x0E170c6fDba74647BEd0947a579FB40A0c983A51",
+      "txHash": "0xd188800e47b3cf8eef7148009a040db66e3a1a9dba2d44ca3888e4b1e9aeeea1",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "txCount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:64"
+          },
+          {
+            "label": "billCount",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:65"
+          },
+          {
+            "label": "_dexaPay",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(DexaPay)5391",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:66"
+          },
+          {
+            "label": "dexaBaseURI",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_string_storage",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:67"
+          },
+          {
+            "label": "bills",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:68"
+          },
+          {
+            "label": "_bill",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(Bill)2048_storage)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:70"
+          },
+          {
+            "label": "_billIds",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_string_memory_ptr,t_uint256)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:71"
+          },
+          {
+            "label": "_billTxns",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:72"
+          },
+          {
+            "label": "_userBills",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:73"
+          },
+          {
+            "label": "_transactions",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_struct(Transaction)1816_storage)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:74"
+          },
+          {
+            "label": "_billRemittances",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:75"
+          },
+          {
+            "label": "_participants",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(Participants)2057_storage))",
+            "contract": "DexaBill",
+            "src": "contracts/DexaBill.sol:76"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)25_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)35_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)25_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)95_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)273_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)25_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(DexaPay)5391": {
+            "label": "contract DexaPay",
+            "numberOfBytes": "20"
+          },
+          "t_enum(BillStatus)2002": {
+            "label": "enum BillStatus",
+            "members": [
+              "Active",
+              "Completed"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_enum(ParticipantType)1999": {
+            "label": "enum ParticipantType",
+            "members": [
+              "Single",
+              "Multiple"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_enum(TransactionType)1796": {
+            "label": "enum TransactionType",
+            "members": [
+              "Deposit",
+              "Withdraw",
+              "Transfer",
+              "FundBill",
+              "RemiteBill"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_enum(VisibilityType)1996": {
+            "label": "enum VisibilityType",
+            "members": [
+              "Public",
+              "Private"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Participants)2057_storage)": {
+            "label": "mapping(address => struct Participants)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_uint256)": {
+            "label": "mapping(string => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(Participants)2057_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct Participants))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Bill)2048_storage)": {
+            "label": "mapping(uint256 => struct Bill)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Transaction)1816_storage)": {
+            "label": "mapping(uint256 => struct Transaction)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Bill)2048_storage": {
+            "label": "struct Bill",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "billId",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "billUrl",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "title",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "description",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "balance",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "creator",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "recipient",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "billToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "expiresAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "isRecurring",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "isFixedAmount",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "12"
+              },
+              {
+                "label": "visibleTo",
+                "type": "t_array(t_address)dyn_storage",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "visibility",
+                "type": "t_enum(VisibilityType)1996",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(BillStatus)2002",
+                "offset": 1,
+                "slot": "14"
+              },
+              {
+                "label": "realisedAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "15"
+              },
+              {
+                "label": "participants",
+                "type": "t_array(t_address)dyn_storage",
+                "offset": 0,
+                "slot": "16"
+              },
+              {
+                "label": "participantType",
+                "type": "t_enum(ParticipantType)1999",
+                "offset": 0,
+                "slot": "17"
+              }
+            ],
+            "numberOfBytes": "576"
+          },
+          "t_struct(Participants)2057_storage": {
+            "label": "struct Participants",
+            "members": [
+              {
+                "label": "user",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "count",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(Transaction)1816_storage": {
+            "label": "struct Transaction",
+            "members": [
+              {
+                "label": "txId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "txType",
+                "type": "t_enum(TransactionType)1796",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "txFrom",
+                "type": "t_address_payable",
+                "offset": 1,
+                "slot": "1"
+              },
+              {
+                "label": "txTo",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "txAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "txFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "txDate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "tokenAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "remark",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)25_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
