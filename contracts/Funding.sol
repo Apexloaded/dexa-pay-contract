@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.27;
 
-import "./DexaPay.sol";
+import "./Gateway.sol";
 
 enum VisibilityType {
     Public,
@@ -48,7 +48,7 @@ struct Participants {
     uint256 updatedAt;
 }
 
-contract DexaBill is DexaBase {
+contract Funding is Base {
     event BillCreated(address indexed creator, uint256 indexed id);
     event BillFunded(
         address indexed funder,
@@ -63,7 +63,7 @@ contract DexaBill is DexaBase {
 
     uint256 public txCount;
     uint256 public billCount;
-    DexaPay private _dexaPay;
+    Gateway private _gateway;
     string private dexaBaseURI;
     uint256[] public bills;
 
@@ -76,14 +76,14 @@ contract DexaBill is DexaBase {
     mapping(uint256 => mapping(address => Participants)) private _participants;
 
     modifier onlyUser() {
-        if (!_dexaPay.hasRole(USER_ROLE, msg.sender)) {
+        if (!_gateway.hasRole(USER_ROLE, msg.sender)) {
             revert(_initError(ERROR_UNAUTHORIZED_ACCESS));
         }
         _;
     }
 
     modifier onlyAllowedTokens(address token) {
-        if (!_dexaPay.isTokenEnlisted(token)) {
+        if (!_gateway.isTokenEnlisted(token)) {
             revert(_initError(ERROR_NOT_FOUND));
         }
         _;
@@ -99,19 +99,19 @@ contract DexaBill is DexaBase {
 
     function init_dexa_bill(
         address _admin,
-        address dexaPay,
+        address gatewayAddress,
         string memory baseUrl
     ) public initializer {
         __AccessControl_init();
         init_dexa_base(_admin);
         _grantRole(MODERATOR_ROLE, msg.sender);
-        _dexaPay = DexaPay(dexaPay);
+        _gateway = Gateway(gatewayAddress);
         dexaBaseURI = baseUrl;
     }
 
-    function init_roles(address dexaPay) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _grantRole(DEXA_BILL_ROLE, address(this));
-        _grantRole(DEXA_PAY_ROLE, dexaPay);
+    function init_roles(address gatewayAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(DEXA_FUNDING_ROLE, address(this));
+        _grantRole(DEXA_GATEWAY_ROLE, gatewayAddress);
     }
 
     function createBill(

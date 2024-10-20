@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.27;
 
-import "./DexaBase.sol";
+import {Base, Transaction, TransactionType, ERC20Upgradeable} from "./Base.sol";
 
 enum RequestType {
     Wallet,
@@ -45,7 +45,7 @@ struct RequestPayment {
     bytes paymentCode;
 }
 
-contract DexaPay is DexaBase {
+contract Gateway is Base {
     event TokenEnlisted(address indexed tokenAddress);
     event TokenDelisted(address indexed tokenAddress);
     event UserRegistered(address indexed user, string username);
@@ -113,10 +113,12 @@ contract DexaPay is DexaBase {
         _;
     }
 
-    function init_dexa_pay(address _admin) public initializer {
-        __AccessControl_init();
+    function initializeGateway(address _admin) public initializer {
         init_dexa_base(_admin);
+        // __AccessControl_init();
         _grantRole(MODERATOR_ROLE, msg.sender);
+        _enlistedTokens[address(0)] = true;
+        _tokenAddresses.push(address(0));
         CLAIMBY_EMAIL_TYPEHASH = keccak256(
             "UserData(bytes email,address token,bytes paymentCode,address user)"
         );
@@ -136,10 +138,10 @@ contract DexaPay is DexaBase {
     }
 
     function init_roles(
-        address dexaBill
+        address fundingAddress
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _grantRole(DEXA_PAY_ROLE, address(this));
-        _grantRole(DEXA_BILL_ROLE, dexaBill);
+        _grantRole(DEXA_GATEWAY_ROLE, address(this));
+        _grantRole(DEXA_FUNDING_ROLE, fundingAddress);
     }
 
     function registerUser(
@@ -218,6 +220,13 @@ contract DexaPay is DexaBase {
             requests[i] = _requests[reqId];
         }
         return requests;
+    }
+
+    function getRequest(
+        bytes memory code
+    ) public view returns (RequestPayment memory) {
+        uint256 id = _paymentCodes[code];
+        return _requests[id];
     }
 
     function getUserTransactions() public view returns (Transaction[] memory) {
@@ -396,7 +405,7 @@ contract DexaPay is DexaBase {
         TransactionType txType,
         string memory remark
     ) external {
-        if (!hasRole(DEXA_PAY_ROLE, msg.sender)) {
+        if (!hasRole(DEXA_GATEWAY_ROLE, msg.sender)) {
             revert(_initError(ERROR_UNAUTHORIZED_ACCESS));
         }
         logTransaction(from, to, token, amount, fee, txType, remark);
@@ -528,23 +537,25 @@ contract DexaPay is DexaBase {
         emit RequestSent(code, msg.sender, email, amount, expiresAt);
     }
 
-    function fulfillRequest(
-        address token,
-        bytes memory code
-    ) public payable onlyEnlistedToken(token) {
+    function fulfillRequest(bytes memory code) public payable {
         uint256 reqId = _paymentCodes[code];
         RequestPayment storage req = _requests[reqId];
+
+        require(
+            req.sender != msg.sender,
+            _initError(ERROR_UNAUTHORIZED_ACCESS)
+        );
 
         require(
             req.status == RequestStatus.Pending,
             _initError(ERROR_NOT_FOUND)
         );
 
-        if (token == address(0)) {
+        if (req.token == address(0)) {
             require(msg.value >= req.amount, _initError(ERROR_INVALID_PRICE));
             _baseBalances[req.sender] += req.amount;
         } else {
-            ERC20Upgradeable ercToken = ERC20Upgradeable(token);
+            ERC20Upgradeable ercToken = ERC20Upgradeable(req.token);
             require(
                 ercToken.balanceOf(msg.sender) >= req.amount,
                 _initError(ERROR_INVALID_PRICE)
@@ -553,7 +564,7 @@ contract DexaPay is DexaBase {
                 ercToken.transferFrom(msg.sender, address(this), req.amount),
                 _initError(ERROR_PROCESS_FAILED)
             );
-            _tokenBalances[req.sender][token] += req.amount;
+            _tokenBalances[req.sender][req.token] += req.amount;
         }
 
         _usersRequest[msg.sender].push(reqId);

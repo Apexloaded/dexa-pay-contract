@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.27;
 
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import {AccessControlUpgradeable} from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 enum TransactionType {
     Deposit,
@@ -26,8 +27,9 @@ struct Transaction {
     string remark;
 }
 
-contract DexaBase is
+contract Base is
     Initializable,
+    OwnableUpgradeable,
     AccessControlUpgradeable,
     ReentrancyGuardUpgradeable
 {
@@ -35,8 +37,8 @@ contract DexaBase is
      * @notice Roles Variable
      */
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
-    bytes32 public constant DEXA_PAY_ROLE = keccak256("DEXA_PAY_ROLE");
-    bytes32 public constant DEXA_BILL_ROLE = keccak256("DEXA_BILL_ROLE");
+    bytes32 public constant DEXA_GATEWAY_ROLE = keccak256("DEXA_GATEWAY_ROLE");
+    bytes32 public constant DEXA_FUNDING_ROLE = keccak256("DEXA_FUNDING_ROLE");
     bytes32 public constant MODERATOR_ROLE = keccak256("MODERATOR_ROLE");
     bytes32 public constant ORGANIZATION_ROLE = keccak256("ORGANIZATION_ROLE");
 
@@ -50,6 +52,7 @@ contract DexaBase is
     string public constant ERROR_INVALID_PRICE = "4";
     string public constant ERROR_PROCESS_FAILED = "5";
     string public constant ERROR_EXPIRED_RESOURCE = "6";
+    string public constant ERROR_INVALID_PERIOD = "7";
 
     /**
      * @notice Initialize function
@@ -57,6 +60,7 @@ contract DexaBase is
      */
     function init_dexa_base(address _admin) public onlyInitializing {
         __AccessControl_init();
+        __Ownable_init(_admin);
         _grantRole(DEFAULT_ADMIN_ROLE, _admin);
     }
 
