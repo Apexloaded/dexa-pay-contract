@@ -6,7 +6,7 @@ import {Gateway} from "./Gateway.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
 // Uncomment this line to use console.log
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 contract Taxes is Base {
     using Math for uint256;
@@ -41,9 +41,13 @@ contract Taxes is Base {
         mapping(address => bool) hasVoted;
     }
 
+    struct ContributionRecord {
+        uint256 amount;
+        uint256 timestamp;
+    }
+
     enum PayoutScheme {
         ROTATING,
-        NEED_BASED,
         RANDOM
     }
 
@@ -54,14 +58,18 @@ contract Taxes is Base {
     uint256 private _cooperativeIds;
     uint256 private _proposalIds;
     uint256 public feePercentage;
+    uint256[] public allCooperativeIds;
 
     mapping(address => uint256) private accumulatedFees;
     mapping(uint256 => address) contributionToken;
+    mapping(address => uint256[]) private userCooperatives;
     mapping(uint256 => mapping(address => bool)) isMember;
     mapping(uint256 => mapping(address => uint256)) lastContributionDate;
     mapping(uint256 => mapping(address => uint256)) totalContributed;
     mapping(uint256 => mapping(uint256 => address)) payoutOrder;
     mapping(uint256 => mapping(address => uint256)) strikes;
+    mapping(address => mapping(uint256 => ContributionRecord[]))
+        private userContributionHistory;
 
     mapping(uint256 => Cooperative) public cooperatives;
     mapping(uint256 => Proposal) public proposals;
@@ -69,9 +77,11 @@ contract Taxes is Base {
     event CooperativeCreated(
         uint256 indexed cooperativeId,
         string name,
-        address creator
+        address creator,
+        address contributionToken
     );
     event MemberJoined(uint256 indexed cooperativeId, address member);
+    event MemberLeft(uint256 indexed cooperativeId, address member);
     event ContributionMade(
         uint256 indexed cooperativeId,
         address member,
@@ -106,12 +116,12 @@ contract Taxes is Base {
         _;
     }
 
-    // modifier onlyAllowedTokens(address token) {
-    //     if (!_gateway.isTokenEnlisted(token)) {
-    //         revert(_initError(ERROR_NOT_FOUND));
-    //     }
-    //     _;
-    // }
+    modifier onlyAllowedTokens(address token) {
+        if (!_gateway.isTokenEnlisted(token)) {
+            revert(_initError(ERROR_NOT_FOUND));
+        }
+        _;
+    }
 
     function initializeTaxes(
         address _admin,
@@ -137,7 +147,7 @@ contract Taxes is Base {
         address[] memory _initialMembers,
         address _contributionToken,
         PayoutScheme _payoutScheme
-    ) external returns (uint256) {
+    ) external onlyAllowedTokens(_contributionToken) returns (uint256) {
         require(_contributionAmount > 0, _initError(ERROR_INVALID_PRICE));
         require(_contributionPeriod > 0, _initError(ERROR_INVALID_PERIOD));
 
@@ -166,11 +176,18 @@ contract Taxes is Base {
             newCooperative.members.push(member);
             isMember[cooperativeId][member] = true;
             payoutOrder[cooperativeId][i] = member;
+            userCooperatives[member].push(cooperativeId);
         }
 
+        allCooperativeIds.push(cooperativeId);
         _cooperativeIds = _cooperativeIds + 1;
 
-        emit CooperativeCreated(cooperativeId, _name, msg.sender);
+        emit CooperativeCreated(
+            cooperativeId,
+            _name,
+            msg.sender,
+            _contributionToken
+        );
         return cooperativeId;
     }
 
@@ -185,8 +202,45 @@ contract Taxes is Base {
         isMember[_cooperativeId][msg.sender] = true;
         payoutOrder[_cooperativeId][cooperative.members.length - 1] = msg
             .sender;
+        userCooperatives[msg.sender].push(_cooperativeId);
 
         emit MemberJoined(_cooperativeId, msg.sender);
+    }
+
+    function leaveCooperative(
+        uint256 _cooperativeId
+    ) external onlyCooperativeMember(_cooperativeId) {
+        Cooperative storage cooperative = cooperatives[_cooperativeId];
+        require(
+            cooperative.members.length > 1,
+            _initError(ERROR_PROCESS_FAILED)
+        );
+
+        isMember[_cooperativeId][msg.sender] = false;
+
+        // Remove member from the members array
+        for (uint256 i = 0; i < cooperative.members.length; i++) {
+            if (cooperative.members[i] == msg.sender) {
+                cooperative.members[i] = cooperative.members[
+                    cooperative.members.length - 1
+                ];
+                cooperative.members.pop();
+                break;
+            }
+        }
+
+        // Remove cooperative from user's list
+        for (uint256 i = 0; i < userCooperatives[msg.sender].length; i++) {
+            if (userCooperatives[msg.sender][i] == _cooperativeId) {
+                userCooperatives[msg.sender][i] = userCooperatives[msg.sender][
+                    userCooperatives[msg.sender].length - 1
+                ];
+                userCooperatives[msg.sender].pop();
+                break;
+            }
+        }
+
+        emit MemberLeft(_cooperativeId, msg.sender);
     }
 
     function contribute(
@@ -209,8 +263,9 @@ contract Taxes is Base {
             accumulatedFees[address(0)] = accFees;
         } else {
             require(msg.value == 0, "ETH not accepted for this cooperative");
-            ERC20Upgradeable token = ERC20Upgradeable(contributionToken[_cooperativeId]);
-            console.log("Token Balance", token.balanceOf(msg.sender));
+            ERC20Upgradeable token = ERC20Upgradeable(
+                contributionToken[_cooperativeId]
+            );
             require(
                 token.balanceOf(msg.sender) >= amount && amount > 0,
                 _initError(ERROR_INVALID_PRICE)
@@ -236,6 +291,12 @@ contract Taxes is Base {
         ].tryAdd(amount);
         totalContributed[_cooperativeId][msg.sender] = contributorsTotal;
 
+        // Record contribution history
+        userContributionHistory[msg.sender][_cooperativeId].push(ContributionRecord({
+            amount: netContribution,
+            timestamp: block.timestamp
+        }));
+
         emit ContributionMade(_cooperativeId, msg.sender, amount);
 
         (, uint256 mulValue) = netContribution.tryMul(
@@ -257,8 +318,6 @@ contract Taxes is Base {
             cooperative.currentRound =
                 (cooperative.currentRound + 1) %
                 cooperative.members.length;
-        } else if (cooperative.payoutScheme == PayoutScheme.NEED_BASED) {
-            payoutMember = _selectNeedBasedMember(_cooperativeId);
         } else if (cooperative.payoutScheme == PayoutScheme.RANDOM) {
             payoutMember = _selectRandomMember(_cooperativeId);
         }
@@ -281,26 +340,6 @@ contract Taxes is Base {
         }
 
         emit PayoutMade(_cooperativeId, payoutMember, payoutAmount);
-    }
-
-    function _selectNeedBasedMember(
-        uint256 _cooperativeId
-    ) internal view returns (address) {
-        Cooperative storage cooperative = cooperatives[_cooperativeId];
-        address needyMember = cooperative.members[0];
-        uint256 lowestContribution = totalContributed[_cooperativeId][
-            needyMember
-        ];
-
-        for (uint256 i = 1; i < cooperative.members.length; i++) {
-            address member = cooperative.members[i];
-            if (totalContributed[_cooperativeId][member] < lowestContribution) {
-                needyMember = member;
-                lowestContribution = totalContributed[_cooperativeId][member];
-            }
-        }
-
-        return needyMember;
     }
 
     function _selectRandomMember(
@@ -437,7 +476,6 @@ contract Taxes is Base {
         require(feeAmount > 0, "No fees to  withdraw");
 
         accumulatedFees[_token] = 0;
-        console.log('Owner', owner());
 
         if (_token == address(0)) {
             (bool success, ) = owner().call{value: feeAmount}("");
